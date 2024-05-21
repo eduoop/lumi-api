@@ -12,3 +12,68 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Invoice {
+  id                         Int      @id @default(autoincrement())
+  clientNumber               String
+  installationNumber         String
+  referenceMonth             String
+  dueDate                    DateTime
+  amountDue                  Float
+  invoiceNumber              String
+  issueDate                  DateTime
+  tariffClass                String
+  tariffSubclass             String
+  tariffModality             String
+  tariffUnit                 String
+  previousReadingDate        DateTime
+  currentReadingDate         DateTime
+  numberOfDays               Int
+  nextReadingDate            DateTime
+  publicLightingContribution Float
+  pisCofinsBaseCalculation   Float
+  icmsBaseCalculation        Float
+  icmsRate                   Float
+  icmsValue                  Float
+  totalAmount                Float
+  createdAt                  DateTime @default(now())
+  updatedAt                  DateTime @updatedAt
+
+  electricEnergyId    Int? @unique
+  sceeEnergyId        Int? @unique
+  compensatedEnergyId Int? @unique
+
+  electricEnergy    ElectricEnergy?    @relation(fields: [electricEnergyId], references: [id])
+  sceeEnergy        SCEEEnergy?        @relation(fields: [sceeEnergyId], references: [id])
+  compensatedEnergy CompensatedEnergy? @relation(fields: [compensatedEnergyId], references: [id])
+}
+
+model ElectricEnergy {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  value     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  invoice Invoice?
+}
+
+model SCEEEnergy {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  value     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  invoice Invoice?
+}
+
+model CompensatedEnergy {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  value     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  invoice Invoice?
+}
