@@ -3,21 +3,6 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const months = [
-  "JAN/2023",
-  "FEV/2023",
-  "MAR/2023",
-  "ABR/2023",
-  "MAI/2023",
-  "JUN/2023",
-  "JUL/2023",
-  "AGO/2023",
-  "SET/2023",
-  "OUT/2023",
-  "NOV/2023",
-  "DEZ/2023",
-];
-
 interface ConsumptionByMonth {
   [referenceMonth: string]: {
     totalElectricEnergyKWh: number;
@@ -40,6 +25,8 @@ interface FinancialMetrics {
 export default {
   energyConsumptionData: async (req: Request, res: Response) => {
     try {
+      const { year } = req.query;
+
       const invoices = await prisma.invoice.findMany({
         include: {
           electricEnergy: true,
@@ -47,6 +34,21 @@ export default {
           compensatedEnergy: true,
         },
       });
+
+      const months = [
+        "JAN/" + year,
+        "FEV/" + year,
+        "MAR/" + year,
+        "ABR/" + year,
+        "MAI/" + year,
+        "JUN/" + year,
+        "JUL/" + year,
+        "AGO/" + year,
+        "SET/" + year,
+        "OUT/" + year,
+        "NOV/" + year,
+        "DEZ/" + year,
+      ];
 
       const consumptionByMonth: ConsumptionByMonth = {};
 
@@ -116,6 +118,8 @@ export default {
 
   financialMetrics: async (req: Request, res: Response) => {
     try {
+      const { year } = req.query;
+
       const invoices = await prisma.invoice.findMany({
         include: {
           electricEnergy: true,
@@ -124,6 +128,21 @@ export default {
           municipalPublicLightingContribution: true,
         },
       });
+
+      const months = [
+        "JAN/" + year,
+        "FEV/" + year,
+        "MAR/" + year,
+        "ABR/" + year,
+        "MAI/" + year,
+        "JUN/" + year,
+        "JUL/" + year,
+        "AGO/" + year,
+        "SET/" + year,
+        "OUT/" + year,
+        "NOV/" + year,
+        "DEZ/" + year,
+      ];
 
       const financialByMonth: FinancialMetrics = {};
 
