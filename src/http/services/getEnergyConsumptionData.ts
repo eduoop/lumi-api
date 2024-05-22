@@ -11,8 +11,23 @@ interface ConsumptionByMonth {
   };
 }
 
-export const getEnergyConsumptionData = async (year: unknown) => {
+export const getEnergyConsumptionData = async (
+  year: unknown,
+  clientNumber: unknown,
+) => {
+  let invoiceFilter = {};
+
+  if (clientNumber) {
+    invoiceFilter = {
+      OR: [
+        { clientNumber: { contains: String(clientNumber) } }, // Procura por clientNumber contendo o valor
+        { clientNumber: { equals: clientNumber } }, // Ou o clientNumber exato, se for apenas um número
+      ],
+    };
+  }
+
   const invoices = await prisma.invoice.findMany({
+    where: invoiceFilter,
     include: {
       electricEnergy: true,
       sceeEnergy: true,

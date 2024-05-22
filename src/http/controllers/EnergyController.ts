@@ -5,8 +5,11 @@ import { getFinancialMetrics } from "../services/getFinancialMetrics";
 export default {
   energyConsumptionData: async (req: Request, res: Response) => {
     try {
-      const { year } = req.query;
-      const energyConsumptionData = await getEnergyConsumptionData(year);
+      const { year, clientNumber } = req.query;
+      const energyConsumptionData = await getEnergyConsumptionData(
+        year,
+        clientNumber,
+      );
 
       res.json(energyConsumptionData);
     } catch (error) {
@@ -16,9 +19,9 @@ export default {
 
   financialMetrics: async (req: Request, res: Response) => {
     try {
-      const { year } = req.query;
+      const { year, clientNumber } = req.query;
 
-      const financialData = await getFinancialMetrics(year);
+      const financialData = await getFinancialMetrics(year, clientNumber);
 
       res.json(financialData);
     } catch (error) {
