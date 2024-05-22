@@ -4,6 +4,9 @@ import { getFinancialMetrics } from "../services/getFinancialMetrics";
 
 export default {
   energyConsumptionData: async (req: Request, res: Response) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     try {
       const { year, clientNumber } = req.query;
       const energyConsumptionData = await getEnergyConsumptionData(
@@ -18,6 +21,9 @@ export default {
   },
 
   financialMetrics: async (req: Request, res: Response) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     try {
       const { year, clientNumber } = req.query;
 
