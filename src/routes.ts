@@ -13,4 +13,6 @@ router.get(
 
 router.get("/energy-financial-metrics", EnergyController.financialMetrics);
 
+router.get("/invoices", InvoiceController.indexInvoices);
+
 export { router };
