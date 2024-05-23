@@ -31,6 +31,9 @@ export default {
   },
 
   indexInvoices: async (req: Request, res: Response) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     const { page } = req.query;
     try {
       const invoices = await getInvoices(Number(page) || 1);
