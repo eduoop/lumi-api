@@ -13,5 +13,11 @@ export const getInvoices = async (page: number) => {
       municipalPublicLightingContribution: true,
     },
   });
-  return invoices || [];
+
+  const totalPages = Math.ceil((await prisma.invoice.count()) / 10);
+
+  return {
+    invoices: invoices || [],
+    totalPages: totalPages,
+  };
 };
