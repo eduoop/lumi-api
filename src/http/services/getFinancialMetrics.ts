@@ -21,8 +21,8 @@ export const getFinancialMetrics = async (
   if (clientNumber) {
     invoiceFilter = {
       OR: [
-        { clientNumber: { contains: String(clientNumber) } }, // Procura por clientNumber contendo o valor
-        { clientNumber: { equals: clientNumber } }, // Ou o clientNumber exato, se for apenas um número
+        { clientNumber: { contains: String(clientNumber) } },
+        { clientNumber: { equals: clientNumber } },
       ],
     };
   }
@@ -106,12 +106,8 @@ export const getFinancialMetrics = async (
       return {
         referenceMonth: month,
         numberOfInvoices: Number(data.count.toFixed(2)),
-        averageValueWithoutGD: Number(
-          (totalValueWithoutGD / data.count).toFixed(2),
-        ),
-        gdEconomy: Number(
-          (data.totalCompensatedEnergyValue / data.count).toFixed(2),
-        ),
+        averageValueWithoutGD: Number(totalValueWithoutGD.toFixed(2)),
+        gdEconomy: Number(data.totalCompensatedEnergyValue.toFixed(2)),
       };
     } else {
       return {

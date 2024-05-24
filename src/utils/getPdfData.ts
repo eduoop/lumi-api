@@ -1,5 +1,4 @@
 export const extractDataFromPdfText = (pdfText: string) => {
-  // Remover espaços em branco extras
   pdfText = pdfText.replace(/\s+/g, " ").trim();
 
   const invoiceData = {

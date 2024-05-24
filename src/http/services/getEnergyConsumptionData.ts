@@ -20,8 +20,8 @@ export const getEnergyConsumptionData = async (
   if (clientNumber) {
     invoiceFilter = {
       OR: [
-        { clientNumber: { contains: String(clientNumber) } }, // Procura por clientNumber contendo o valor
-        { clientNumber: { equals: clientNumber } }, // Ou o clientNumber exato, se for apenas um número
+        { clientNumber: { contains: String(clientNumber) } },
+        { clientNumber: { equals: clientNumber } },
       ],
     };
   }
@@ -89,7 +89,7 @@ export const getEnergyConsumptionData = async (
       const totalEnergyConsumptionKWh =
         data.totalElectricEnergyKWh + data.totalSceeEnergyKWh;
       const averageEnergyConsumptionKWh = Number(
-        (totalEnergyConsumptionKWh / data.count).toFixed(2),
+        totalEnergyConsumptionKWh.toFixed(2),
       );
       return {
         referenceMonth: month,
