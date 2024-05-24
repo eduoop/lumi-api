@@ -2,8 +2,13 @@
   "name": "lumi-api",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
     "dev": "tsx watch src/http/server.ts",
+    "build": "tsup src/http/server.ts",
+    "start": "node dist/http/server.js",
     "prepare": "husky",
     "test": "jest"
   },
@@ -33,6 +38,7 @@
     "prisma": "^5.14.0",
     "sucrase": "^3.35.0",
     "ts-jest": "^29.1.3",
+    "tsup": "^8.0.2",
     "tsx": "^4.10.5",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.10.0"
