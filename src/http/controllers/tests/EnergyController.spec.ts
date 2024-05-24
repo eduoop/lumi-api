@@ -236,13 +236,11 @@ const getEnergyFinancialData = async (year: unknown, clientNumber: unknown) => {
         data.totalLightingContributionValue;
       return {
         referenceMonth: month,
-        numberOfInvoices: Number(data.count.toFixed(2)),
+        numberOfInvoices: data.count,
         averageValueWithoutGD: Number(
           (totalValueWithoutGD / data.count).toFixed(2),
         ),
-        gdEconomy: Number(
-          (data.totalCompensatedEnergyValue / data.count).toFixed(2),
-        ),
+        gdEconomy: Number(data.totalCompensatedEnergyValue.toFixed(2)),
       };
     } else {
       return {
@@ -446,7 +444,7 @@ describe("GET /energy-consumption-data", () => {
         referenceMonth: "NOV/2023",
         numberOfInvoices: 2,
         averageValueWithoutGD: 550,
-        gdEconomy: 350,
+        gdEconomy: 700,
       },
       {
         referenceMonth: "DEZ/2023",
