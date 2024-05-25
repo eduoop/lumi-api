@@ -86,11 +86,11 @@ npm run test
 
 ## 📜 Scripts Disponíveis
 
-- \`dev\`: Inicia o servidor em modo de desenvolvimento.
-- \`build\`: Compila o projeto para produção.
-- \`start\`: Inicia o servidor a partir dos arquivos compilados.
-- \`prepare\`: Configura o Husky para hooks de git.
-- \`test\`: Executa os testes utilizando Jest.
+- dev: Inicia o servidor em modo de desenvolvimento.
+- build: Compila o projeto para produção.
+- start: Inicia o servidor a partir dos arquivos compilados.
+- prepare: Configura o Husky para hooks de git.
+- test: Executa os testes utilizando Jest.
 
 ## 🤝 Criador
 
