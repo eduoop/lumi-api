@@ -10,8 +10,6 @@ export const extractDataFromPdfText = (pdfText: string) => {
     publicLightingContribution: getMunicipalPublicLightingContribution(pdfText),
   };
 
-  console.log(invoiceData);
-
   return invoiceData;
 };
 
@@ -34,12 +32,16 @@ function getReferenceMonth(text: string) {
 }
 
 function getElectricEnergy(text: string) {
-  const regex = /Energia ElétricakWh (\d+(?:[.,]\d+)?).{12}(\d+(?:[.,]\d+)?)/;
+  const regex =
+    /Energia ElétricakWh (\d+(?:[.,]\d+)?).{12}(\d+(?:[.,]\d+)?).{1}(\d+(?:[.,]\d+)?)/;
   const match = text.match(regex);
 
   if (match) {
     return {
-      value: match[2],
+      value:
+        match?.[3].length === 2
+          ? `${match[2].replace(".", "")}.${match[3]}`
+          : match[2],
       quantity: match[1],
     };
   }
@@ -47,20 +49,27 @@ function getElectricEnergy(text: string) {
 
 function getSCEEEnergy(text: string) {
   const regex =
-    /Energia SCEE ISENTAkWh (\d+(?:[.,]\d+)?).{12}(\d+(?:[.,]\d+)?)/;
-  const secondRegex = /ICMSkWh (-?\d+(?:[.,]\d+)?).{12}(-?\d+(?:[.,]\d+)?)/;
+    /Energia SCEE ISENTAkWh (\d+(?:[.,]\d+)?).{12}(\d+(?:[.,]\d+)?).{1}(\d+(?:[.,]\d+)?)/;
+  const secondRegex =
+    /ICMSkWh (-?\d+(?:[.,]\d+)?).{12}(-?\d+(?:[.,]\d+)?).{1}(\d+(?:[.,]\d+)?)/;
 
   const match = text.match(regex);
   const secondMatch = text.match(secondRegex);
 
   if (match) {
     return {
-      value: match[2],
+      value:
+        match?.[3].length === 2
+          ? `${match[2].replace(".", "")}.${match[3]}`
+          : match[2],
       quantity: match[1],
     };
   } else if (secondMatch) {
     return {
-      value: secondMatch[2],
+      value:
+        secondMatch?.[3].length === 2
+          ? `${secondMatch[2].replace(".", "")}.${secondMatch[3]}`
+          : secondMatch[2],
       quantity: secondMatch[1],
     };
   }
@@ -68,24 +77,31 @@ function getSCEEEnergy(text: string) {
 
 function getCompensatedEnergy(text: string) {
   const regex =
-    /Energia compensada GD IkWh (\d+(?:[.,]\d+)?).{12}(-?\d+(?:[.,]\d+)?)/;
+    /Energia compensada GD IkWh (\d+(?:[.,]\d+)?).{12}(-?\d+(?:[.,]\d+)?).{1}(\d+(?:[.,]\d+)?)/;
   const match = text.match(regex);
 
   if (match) {
     return {
-      value: match[2],
+      value:
+        match?.[3].length === 2
+          ? `${match[2].replace(".", "")}.${match[3]}`
+          : match[2],
       quantity: match[1],
     };
   }
 }
 
 function getMunicipalPublicLightingContribution(text: string) {
-  const regex = /Contrib Ilum Publica Municipal (\d+(?:[.,]\d+)?)/;
+  const regex =
+    /Contrib Ilum Publica Municipal (\d+(?:[.,]\d+)?).{1}(\d+(?:[.,]\d+)?)/;
   const match = text.match(regex);
 
   if (match) {
     return {
-      value: match[1],
+      value:
+        match?.[2].length === 2
+          ? `${match[1].replace(".", "")}.${match[2]}`
+          : match[1],
     };
   }
 }
