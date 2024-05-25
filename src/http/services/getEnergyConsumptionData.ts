@@ -88,16 +88,12 @@ export const getEnergyConsumptionData = async (
       const data = consumptionByMonth[month];
       const totalEnergyConsumptionKWh =
         data.totalElectricEnergyKWh + data.totalSceeEnergyKWh;
-      const averageEnergyConsumptionKWh = Number(
-        totalEnergyConsumptionKWh.toFixed(2),
-      );
+      const averageEnergyConsumptionKWh = totalEnergyConsumptionKWh;
       return {
         referenceMonth: month,
         numberOfInvoices: data.count,
         averageEnergyConsumptionKWh,
-        totalCompensatedEnergyKWh: Number(
-          data.totalCompensatedEnergyKWh.toFixed(2),
-        ),
+        totalCompensatedEnergyKWh: data.totalCompensatedEnergyKWh,
       };
     } else {
       return {
