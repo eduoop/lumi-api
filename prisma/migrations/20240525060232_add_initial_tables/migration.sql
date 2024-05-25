@@ -15,7 +15,7 @@ CREATE TABLE "Invoice" (
 -- CreateTable
 CREATE TABLE "ElectricEnergy" (
     "id" SERIAL NOT NULL,
-    "quantity" INTEGER NOT NULL,
+    "quantity" DOUBLE PRECISION NOT NULL,
     "value" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -25,7 +25,7 @@ CREATE TABLE "ElectricEnergy" (
 -- CreateTable
 CREATE TABLE "SCEEEnergy" (
     "id" SERIAL NOT NULL,
-    "quantity" INTEGER NOT NULL,
+    "quantity" DOUBLE PRECISION NOT NULL,
     "value" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -35,7 +35,7 @@ CREATE TABLE "SCEEEnergy" (
 -- CreateTable
 CREATE TABLE "CompensatedEnergy" (
     "id" SERIAL NOT NULL,
-    "quantity" INTEGER NOT NULL,
+    "quantity" DOUBLE PRECISION NOT NULL,
     "value" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
