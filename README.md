@@ -43,7 +43,7 @@ npx prisma generate
 ## 5. Crie um \`.env\` na raiz do projeto e adicione as seguintes variáveis:
 
 ```
-DATABASE_URL="sua_url_do_banco_de_dados"
+DATABASE_URL="postgresql://postgres:password@localhost:5432"
 PORT=3000
 ```
 
