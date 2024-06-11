@@ -13,6 +13,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  name      String
+  invoices  Invoice[]
+  Token     Token[]
+  createdAt DateTime  @default(now())
+}
+
+model Token {
+  id         Int      @id @default(autoincrement())
+  token      String
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  expiration DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
 model Invoice {
   id             Int      @id @default(autoincrement())
   clientNumber   String
@@ -28,6 +48,8 @@ model Invoice {
   sceeEnergy                          SCEEEnergy?                          @relation(fields: [sceeEnergyId], references: [id])
   compensatedEnergy                   CompensatedEnergy?                   @relation(fields: [compensatedEnergyId], references: [id])
   municipalPublicLightingContribution MunicipalPublicLightingContribution? @relation(fields: [municipalPublicLightingContributionId], references: [id])
+  User                                User?                                @relation(fields: [userId], references: [id])
+  userId                              Int?
 }
 
 model ElectricEnergy {

@@ -4,14 +4,16 @@ import { getFinancialMetrics } from "../services/getFinancialMetrics";
 
 export default {
   energyConsumptionData: async (req: Request, res: Response) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    const userId = req.user.id;
 
     try {
-      const { year, clientNumber } = req.query;
+      const { year, clientNumber, id } = req.query;
+
       const energyConsumptionData = await getEnergyConsumptionData(
         year,
         clientNumber,
+        userId,
+        id,
       );
 
       res.json(energyConsumptionData);
@@ -24,10 +26,17 @@ export default {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    try {
-      const { year, clientNumber } = req.query;
+    const userId = req.user.id;
 
-      const financialData = await getFinancialMetrics(year, clientNumber);
+    try {
+      const { year, clientNumber, id } = req.query;
+
+      const financialData = await getFinancialMetrics(
+        year,
+        clientNumber,
+        userId,
+        id,
+      );
 
       res.json(financialData);
     } catch (error) {

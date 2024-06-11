@@ -8,6 +8,8 @@ const upload = multer({ storage: storage });
 
 export default {
   readInvoice: async (req: Request, res: Response) => {
+    const user = req.user;
+
     upload.single("file")(req, res, async function (err) {
       if (err) {
         return res
@@ -21,7 +23,7 @@ export default {
 
       try {
         const pdfData = await parseBuffer(req.file.buffer);
-        createInvoice({ pdfData });
+        createInvoice({ pdfData, userId: user.id });
         res.send("Arquivo PDF recebido e analisado!");
       } catch (error) {
         console.error("Erro ao analisar o PDF:", error);
@@ -31,12 +33,11 @@ export default {
   },
 
   indexInvoices: async (req: Request, res: Response) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    const userId = req.user.id;
 
     const { page } = req.query;
     try {
-      const invoices = await getInvoices(Number(page) || 1);
+      const invoices = await getInvoices(Number(page) || 1, userId);
       return res.json(invoices);
     } catch (error) {
       return res.status(500).json({ error: "Internal Server Error" });

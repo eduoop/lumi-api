@@ -2,8 +2,9 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const getInvoices = async (page: number) => {
+export const getInvoices = async (page: number, userId: number) => {
   const invoices = await prisma.invoice.findMany({
+    where: { userId },
     skip: 10 * (page - 1),
     take: 10,
     include: {

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -14,16 +14,24 @@ interface ConsumptionByMonth {
 export const getEnergyConsumptionData = async (
   year: unknown,
   clientNumber: unknown,
+  userId: number,
+  id: unknown,
 ) => {
-  let invoiceFilter = {};
+  type InvoiceWhereInput = Prisma.InvoiceWhereInput;
+
+  const invoiceFilter: InvoiceWhereInput = { userId };
+
+  const numberId = id ? Number(id) : undefined;
+
+  if (numberId !== undefined) {
+    invoiceFilter.id = numberId;
+  }
 
   if (clientNumber) {
-    invoiceFilter = {
-      OR: [
-        { clientNumber: { contains: String(clientNumber) } },
-        { clientNumber: { equals: clientNumber } },
-      ],
-    };
+    invoiceFilter.OR = [
+      { clientNumber: { contains: String(clientNumber) } },
+      { clientNumber: { equals: String(clientNumber) } },
+    ];
   }
 
   const invoices = await prisma.invoice.findMany({

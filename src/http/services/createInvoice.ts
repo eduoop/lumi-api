@@ -6,8 +6,10 @@ const prisma = new PrismaClient();
 
 export const createInvoice = async ({
   pdfData,
+  userId,
 }: {
   pdfData: parseBuffer.Result;
+  userId: number;
 }) => {
   const pdfText = pdfData.text;
 
@@ -16,6 +18,7 @@ export const createInvoice = async ({
   if (data.clientNumber && data.referenceMonth) {
     const newInvoice = await prisma.invoice.create({
       data: {
+        userId: userId,
         referenceMonth: data.referenceMonth,
         clientNumber: data.clientNumber,
       },
