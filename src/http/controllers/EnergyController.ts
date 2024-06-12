@@ -23,9 +23,6 @@ export default {
   },
 
   financialMetrics: async (req: Request, res: Response) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-
     const userId = req.user.id;
 
     try {
